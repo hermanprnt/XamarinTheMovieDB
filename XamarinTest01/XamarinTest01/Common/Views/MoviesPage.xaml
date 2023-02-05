@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="XamarinTest01.Common.Views.MoviesPage"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             Title="Movies Box">
+
+    <Grid>
+        <RefreshView Command="{Binding RefreshMoviesCommand}"
+                     IsRefreshing="{Binding IsRefreshing}">
+            <CollectionView ItemsSource="{Binding allMovies}" RemainingItemsThreshold="{Binding MovieTreshold}" RemainingItemsThresholdReachedCommand="{Binding MovieTresholdReachedCommand}"
+                ItemsLayout="VerticalGrid, 2" SelectionMode="Single" SelectedItem="{Binding SelectedMovie}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Padding="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="1" />
+                            </Grid.RowDefinitions>
+
+                            <ffimageloading:CachedImage Grid.Row="0" Margin="2"
+                           Source="{Binding poster_path, StringFormat= 'http://image.tmdb.org/t/p/w500/{0}'}"
+                           Aspect="AspectFill"
+                           HeightRequest="360"
+                           WidthRequest="100" 
+                           LoadingPlaceholder = "default_poster.jpg"
+                           ErrorPlaceholder = "default_poster.jpg"
+                            />  
+
+                            <Label Grid.Row="1" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                       Text="{Binding title}" TextColor="Black" FontSize="14"
+                       LineBreakMode="TailTruncation" />
+
+                            <StackLayout Background="Black" Grid.Row="2" 
+                       BackgroundColor="Black" />
+
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+        <ActivityIndicator IsRunning="{Binding IsLoadingData}"
+                           HeightRequest="30"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           WidthRequest="30"/>
+    </Grid>
+</ContentPage>

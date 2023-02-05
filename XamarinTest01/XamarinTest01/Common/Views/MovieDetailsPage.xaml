@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="XamarinTest01.Common.Views.MovieDetailsPage"
+             Title="{Binding Movies.title}">
+    <Grid Margin="10,10,10,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <ffimageloading:CachedImage Grid.Row="0"
+                       Source="{Binding Movies.poster_path, StringFormat= 'http://image.tmdb.org/t/p/w500/{0}'}"
+                       LoadingPlaceholder = "default_poster.jpg"
+	                   ErrorPlaceholder = "default_poster.jpg"
+                       Aspect="AspectFit"
+                       HeightRequest="400"
+                       WidthRequest="150" />
+
+        <Grid Grid.Row="1" VerticalOptions="Start" HorizontalOptions="CenterAndExpand">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Text="{Binding Movies.title, StringFormat='Title: {0}'}" FontSize="Small" Grid.Row="1" Grid.Column="0" 
+                TextColor="Black" HorizontalTextAlignment="Start" VerticalTextAlignment="Start" />
+            <Label Text="{Binding Movies.release_date, StringFormat='Release: {0}'}" FontSize="Small" Grid.Row="1" Grid.Column="1"
+               TextColor="Black" HorizontalOptions="Start" HorizontalTextAlignment="Start" />
+        </Grid>
+
+        <Label Text="{Binding Movies.vote_average, StringFormat='Average Vote: {0}'}" FontSize="Small" Grid.Row="2"
+                HorizontalOptions="Center" TextColor="Black" HorizontalTextAlignment="Start" VerticalTextAlignment="Start" />
+
+        <Label Text="Description" HorizontalOptions="Center" VerticalOptions="Start" FontSize="Small" Grid.Row="3" TextColor="Black"/>
+
+        <ScrollView Grid.Row="4">
+            <StackLayout>
+
+                <Label Text="{Binding Movies.overview}" FontSize="Small" Grid.Column="1"
+                HorizontalOptions="End" HorizontalTextAlignment="Start" />
+            </StackLayout>
+        </ScrollView>
+
+        <ActivityIndicator IsRunning="{Binding IsLoadingData}"
+                           HeightRequest="30"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           WidthRequest="30"/>
+    </Grid>
+</ContentPage>
